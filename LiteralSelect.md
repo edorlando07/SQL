@@ -4,12 +4,12 @@ Section 1, Lecture 8
 https://www.udemy.com/microsoft-sql-for-beginners/learn/v4/overview  
 */  
 
-/*1. Execute a literal select statement that returns your name.*/  
+/* Execute a literal select statement that returns your name.*/  
   
 SELECT 'Ed', 'Orlando'
 
 
-/*2. Execute a literal SELECT statement that returns the phrase “Day 1 of	Training” in one column and the	result of 5*3 in	another	column.*/  
+/* Execute a literal SELECT statement that returns the phrase “Day 1 of	Training” in one column and the	result of 5*3 in	another	column.*/  
 
 SELECT 'Day 1 of Training', 5*3
 
