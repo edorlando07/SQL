@@ -3,9 +3,9 @@ INNER JOIN Practice Problems
 Section 4, Lecture 26
 https://www.udemy.com/microsoft-sql-for-beginners/learn/v4/overview  
   
-Using	the	Person.Person	and	Person.Password	tables,	INNER	JOIN	the	two	tables	
-using	the	BusinessEntityID	column	and	return	the	FirstName	and	LastName	
-columns	from	Person.Person	and	then	PasswordHash	column	from	
+Using the Person.Person and Person.Password tables, INNER JOIN the two tables	
+using the BusinessEntityID column and return the FirstName and LastName	
+columns	from Person.Person and then PasswordHas column from	
 Person.Password
 */
 
