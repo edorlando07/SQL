@@ -13,3 +13,16 @@ returned. Why is the row count what it is?
 */
 
 
+SELECT 
+	HRE.BusinessEntityID,
+	HRE.NationalIDNumber,
+	HRE.JobTitle,
+	HRDH.DepartmentID,
+	HRDH.StartDate,
+	HRDH.EndDate
+FROM 
+	HumanResources.Employee HRE
+	JOIN 
+	HumanResources.EmployeeDepartmentHistory HRDH
+ON 
+	HRE.BusinessEntityID = HRDH.BusinessEntityID
