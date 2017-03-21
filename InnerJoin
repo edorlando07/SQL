@@ -1,1 +1,21 @@
-INNER JOIN PRACTICE PROBLEMS
+/*  
+INNER JOIN Practice Problems  
+Section 4, Lecture 26
+https://www.udemy.com/microsoft-sql-for-beginners/learn/v4/overview  
+  
+Using	the	Person.Person	and	Person.Password	tables,	INNER	JOIN	the	two	tables	
+using	the	BusinessEntityID	column	and	return	the	FirstName	and	LastName	
+columns	from	Person.Person	and	then	PasswordHash	column	from	
+Person.Password
+*/
+
+
+SELECT 
+	PS.FirstName, 
+	PS.LastName,
+	PW.PasswordHash
+FROM 
+	Person.Person PS
+INNER JOIN Person.Password PW
+	ON
+	PS.BusinessEntityID = PW.BusinessEntityID
