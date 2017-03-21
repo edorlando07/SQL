@@ -1,0 +1,25 @@
+/*  
+INNER JOIN Practice Problems  
+Section 4, Lecture 26, Problem 3
+https://www.udemy.com/microsoft-sql-for-beginners/learn/v4/overview  
+  
+Using the Person.Person and Person.Password tables, INNER JOIN the two tables	
+using the BusinessEntityID column and return the FirstName and LastName	
+columns	from Person.Person and then PasswordHas column from	
+Person.Password
+
+Expand upon the query used in question 1. Using the existing query, add another INNER JOIN to the 
+Person.EmailAddress table and include the EmailAddress column in your select statement
+*/
+
+SELECT 
+	PS.FirstName, 
+	PS.LastName,
+	PW.PasswordHash,
+	E.EmailAddress
+FROM 
+	Person.Person PS
+	INNER JOIN Person.Password PW
+	ON PS.BusinessEntityID = PW.BusinessEntityID
+	INNER JOIN Person.EmailAddress E
+	ON PS.BusinessEntityID = E.BusinessEntityID
