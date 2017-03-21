@@ -1,6 +1,6 @@
 /*  
 INNER JOIN Practice Problems  
-Section 4, Lecture 26
+Section 4, Lecture 26, Problem 1
 https://www.udemy.com/microsoft-sql-for-beginners/learn/v4/overview  
   
 Using the Person.Person and Person.Password tables, INNER JOIN the two tables	
