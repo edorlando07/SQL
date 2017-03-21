@@ -1,0 +1,15 @@
+/*  
+INNER JOIN Practice Problems  
+Section 4, Lecture 26, Problem 2
+https://www.udemy.com/microsoft-sql-for-beginners/learn/v4/overview  
+  
+Join	the	HumanResources.Employee	and	the	
+HumanResources.EmployeeDepartmentHistory	tables	together	via	an	INNER	JOIN	
+using	the	BusinessEntityID	column.		Return	the	BusinessEntityID,	
+NationalIDNumber	and	JobTitle	columns	from	HumanResources.Employee	and	the	
+DepartmentID,	StartDate,	and	EndDate	columns	from	
+HumanResources.EmployeeDepartmentHistory.		Notice	the	number	of	rows	
+returned.		Why	is	the	row	count	what	it	is?
+*/
+
+
