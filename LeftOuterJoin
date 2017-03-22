@@ -1,0 +1,2 @@
+Using the previous example as your foundation, join to the Person.Person table to return the sales person’s first name and last name. 
+Now, only include those rows where the territory’s name is either “Northeast” or “Central”
