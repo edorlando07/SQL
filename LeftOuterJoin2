@@ -1,0 +1,33 @@
+/*  
+LEFT OUTER JOIN Practice Problems  
+Section 4, Lecture 30, Problem 3
+https://www.udemy.com/microsoft-sql-for-beginners/learn/v4/overview  
+  
+Return the Name and ListPrice columns from Production.Product. For each product, 
+regardless of whether or not it has an assigned ProductSubcategoryID, return the 
+Name column from Product.ProductSubcategory for each product. Then, return the 
+Name column from Production.ProductCategory for each row. Give the Name column 
+from Production.Product the alias “ProductName”, the Name column from Production.ProductSubcategory 
+the alias “ProductSubcategoryName”, and the Name column from Production.ProductCategory 
+the alias “ProductCategoryName”. Order the results by the “ProductCategoryName” in 
+descending order and then the “ProductSubcategoryName” in ascending order.
+
+*/
+
+
+SELECT 
+	PP.Name AS [ProductName],
+	PP.ListPrice,
+	PS.Name AS [ProductSubcategoryName],
+	PC.Name AS [ProductCategoryName]
+
+FROM Production.Product PP
+	LEFT OUTER JOIN
+	Production.ProductSubcategory PS
+	ON PP.ProductSubcategoryID = PS.ProductSubcategoryID
+
+	LEFT OUTER JOIN 
+	Production.ProductCategory PC
+	ON PC.ProductCategoryID = PS.ProductCategoryID
+
+ORDER BY PC.Name DESC, PS.Name ASC
