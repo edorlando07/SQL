@@ -1,2 +1,26 @@
-Using the previous example as your foundation, join to the Person.Person table to return the sales person’s first name and last name. 
-Now, only include those rows where the territory’s name is either “Northeast” or “Central”
+/*  
+LEFT OUTER JOIN Practice Problems  
+Section 4, Lecture 30, Problem 2
+https://www.udemy.com/microsoft-sql-for-beginners/learn/v4/overview  
+  
+Using the previous example as your foundation, join to the Person.Person table to return the 
+sales person’s first name and last name. Now, only include those rows where the territory’s 
+name is either “Northeast” or “Central”
+*/
+
+
+SELECT 
+	SP.BusinessEntityID, 
+	SP.SalesYTD,
+	ST.Name AS [Territory Name],
+	PP.FirstName,
+	PP.LastName
+
+FROM Sales.SalesPerson SP
+  LEFT OUTER JOIN Sales.SalesTerritory ST
+  ON SP.TerritoryID = ST.TerritoryID
+
+  LEFT OUTER JOIN Person.Person PP
+  ON SP.BusinessEntityID = PP.BusinessEntityID
+
+WHERE ST.Name IN ('Northeast', 'Central')
