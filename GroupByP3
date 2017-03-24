@@ -1,0 +1,22 @@
+/*  
+Aggregate Practice Problems  
+Section 6, Lecture 36, Problem 3
+https://www.udemy.com/microsoft-sql-for-beginners/learn/v4/overview  
+  
+Using Sales.SalesOrderHeader, how many sales occurred in each territory 
+between July 1, 2005 and December 31, 2006? Order the results by the sale 
+count in descending order
+
+*/
+
+SELECT
+	TerritoryID,
+	Count(*) AS SalesCount
+FROM 
+	Sales.SalesOrderHeader
+WHERE 
+	OrderDate BETWEEN '07-01-2005' AND '12-31-2006'
+GROUP BY 
+	TerritoryID
+ORDER BY
+	SalesCount DESC
