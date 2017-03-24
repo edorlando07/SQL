@@ -1,1 +1,17 @@
-dsfdsaf
+/*  
+Aggregate Practice Problems  
+Section 6, Lecture 36, Problem 1
+https://www.udemy.com/microsoft-sql-for-beginners/learn/v4/overview  
+  
+In the Person.Person table, how many people are associated with each PersonType?
+
+*/
+
+
+SELECT 
+	PersonType,
+	COUNT(*) AS PersonTypeCount
+FROM 
+	Person.Person
+GROUP BY 
+	PersonType
