@@ -1,1 +1,23 @@
-dsfasd
+/*  
+Aggregate Practice Problems  
+Section 7, Lecture 39, Problem 3
+https://www.udemy.com/microsoft-sql-for-beginners/learn/v4/overview  
+  
+Using the Production.Product table, find how many products are 
+associated with each color. Ignore all rows where the color has 
+a NULL value. Once grouped, return to the results only those 
+colors that had at least 20 products with that color
+
+*/
+
+SELECT
+	Color,
+	COUNT(*)
+FROM
+	Production.Product
+WHERE 
+	Color IS NOT NULL
+GROUP BY
+	Color
+HAVING
+	Count(*) >= 20
