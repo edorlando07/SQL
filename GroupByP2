@@ -1,6 +1,6 @@
 /*  
 Aggregate Practice Problems  
-Section 6, Lecture 36, Problem 1
+Section 6, Lecture 36, Problem 2
 https://www.udemy.com/microsoft-sql-for-beginners/learn/v4/overview  
   
 Using only one query, find out how many products in Production.Product are the color “red” and how many are “black”.
