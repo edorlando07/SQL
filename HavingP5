@@ -1,0 +1,31 @@
+/*  
+Aggregate Practice Problems  
+Section 7, Lecture 39, Problem 5
+https://www.udemy.com/microsoft-sql-for-beginners/learn/v4/overview  
+
+Find the first and last name of each customer who has placed at least 
+6 orders between July 1, 2005 and December 31, 2006. Order your results 
+by the number of orders placed in descending order. (Hint: You will need 
+to join to three tables – Sales.SalesOrderHeader, Sales.Customer, and 
+Person.Person. You will use every clause to complete this query).
+
+*/
+
+SELECT 
+	P.FirstName,
+	P.LastName,
+	COUNT(*) AS [Order Count]
+FROM 
+	Sales.SalesOrderHeader SOH
+	INNER JOIN Sales.Customer SC ON
+	SC.CustomerID = SOH.CustomerID
+	INNER JOIN 
+	Person.Person P ON
+	P.BusinessEntityID = SC.PersonID
+WHERE 
+	SOH.OrderDate BETWEEN '7/1/2005' AND '12/31/2006'
+GROUP BY
+	P.FirstName,
+	P.LastName
+HAVING
+	Count(*) >= 6
