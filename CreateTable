@@ -1,0 +1,6 @@
+CREATE TABLE tblTransaction
+(
+	Amount smallmoney,
+	DateOfTransaction smalldatetime,
+	EmployeeNumber int
+)
