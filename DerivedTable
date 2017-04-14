@@ -1,0 +1,8 @@
+--Listed below is a simple example of a derived table
+--from a sample data set in SSMS
+
+SELECT Department
+from
+(Select Department, count(*) as NumberOfDepartment
+from tblEmployee
+GROUP BY Department) as newTable
