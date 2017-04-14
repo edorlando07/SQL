@@ -1,8 +1,10 @@
 --Listed below is a simple example of a derived table
 --from a sample data set in SSMS
+--This gives you the list of distinct department names
+--without the number of rows
 
 SELECT Department
 from
-(Select Department, count(*) as NumberOfDepartment
-from tblEmployee
-GROUP BY Department) as newTable
+  (Select Department, count(*) as NumberOfDepartment
+  from tblEmployee
+  GROUP BY Department) as newTable
