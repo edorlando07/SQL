@@ -1,0 +1,21 @@
+The fix is listed in this video
+
+https://www.youtube.com/watch?v=NIMuH0ANISg
+
+TITLE: Connect to Server
+------------------------------
+
+Cannot connect to DESKTOP-2UA72BV\SQLEXPRESS.
+
+------------------------------
+ADDITIONAL INFORMATION:
+
+A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: SQL Network Interfaces, error: 26 - Error Locating Server/Instance Specified) (Microsoft SQL Server, Error: -1)
+
+For help, click: http://go.microsoft.com/fwlink?ProdName=Microsoft%20SQL%20Server&EvtSrc=MSSQLServer&EvtID=-1&LinkId=20476
+
+------------------------------
+BUTTONS:
+
+OK
+------------------------------
