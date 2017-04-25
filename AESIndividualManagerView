@@ -1,0 +1,41 @@
+USE DEV_SANDBOX
+GO
+
+CREATE VIEW DEV_SAND_BI_AES_Ind_Manager_Scores
+AS 
+       (
+
+       SELECT 
+              P.Survey_Type_Id
+              ,P.Year_Num
+              ,P.Var_Flag
+              ,P.Dept
+              ,P.Employee
+              ,P.Full_Name
+              ,P.Last_Name
+              ,P.First_Name
+              ,P.Total_Hotel
+              ,P.Type
+              ,P.GM
+              ,P.Manager
+              ,P.Process_Level
+              ,P.Job_Description
+              ,P.Nsize
+              ,P.Question_Cd
+              ,P.Measures
+              ,Q.Description
+              ,Q.Question_Buckets
+              ,T.Percentile_25
+              ,T.Percentile_50
+              ,T.Percentile_75
+              ,T.Percentile_90
+
+       
+       FROM DEV_SANDBOX.dbo.AESProperty P
+       LEFT JOIN DEV_SANDBOX.dbo.AESQuestionLKP Q
+       ON P.Question_Cd = Q.Question_Cd
+
+       LEFT JOIN DEV_SANDBOX.dbo.AESThresholds T
+       ON P.Question_Cd = T.Question_Cd AND P.Year_Num = T.Year_Num
+       
+       )
