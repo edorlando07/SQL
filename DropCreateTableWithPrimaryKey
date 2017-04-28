@@ -1,0 +1,16 @@
+USE tempdb
+GO
+
+IF OBJECT_ID('tblTransaction') IS NOT NULL 
+	BEGIN
+		DROP TABLE tblTransaction 
+	END
+
+
+CREATE TABLE tblTransaction
+(
+	Id int Identity constraint PK_Id primary key(Id),
+	Amount smallmoney,
+	DateOfTransaction smalldatetime,
+	EmployeeNumber int
+)
