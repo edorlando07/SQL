@@ -1,0 +1,13 @@
+--Use the commit tran ONLY after you have used the 
+--rollback option.  Once you feel good about the 
+--query using rollback, you can change it to 
+--commit to get it into the database.
+
+USE tempdb
+GO
+
+begin tran
+	insert into tempdb.dbo.tblTransaction
+	values (100, '2017-04-28', 1)
+	select * from tempdb.dbo.tblTransaction
+commit tran
