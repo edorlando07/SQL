@@ -1,0 +1,7 @@
+--Create a new table that has a primary key that auto increments
+
+CREATE TABLE tblEmployee2
+(
+  EmployeeNumber INT CONSTRAINT PK_tbl_Employee2 PRIMARY KEY IDENTITY(1,1)
+  EmployeeName NVARCHAR(20)
+)
