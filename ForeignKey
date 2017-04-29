@@ -1,0 +1,31 @@
+--Foreign key – in practice
+
+BEGIN TRAN 
+--Allows for a rollback if needed
+
+  ALTER TABLE tblTransaction ALTER COLUMN EmployeeNumber INT NULL 
+  ALTER TABLE tblTransaction ADD CONSTRAINT DF_tblTransaction DEFAULT 124 FOR EmployeeNumber
+  ALTER TABLE tblTransaction WITH NOCHECK
+  --Use NOCHECK To disable a check constraint for INSERT and UPDATE statements
+
+  ADD CONSTRAINT FK_tblTransaction_EmployeeNumber FOREIGN KEY (EmployeeNumber)
+  REFERENCES tblEmployee(EmployeeNumber)
+
+  ON UPDATE CASCADE
+  --CASCADE allows you to change the primary key AND any foreign keys associated with it
+  --Without it, you will not be able to chnage the primary key.  You will get an error.
+
+  ON DELETE set default
+  --UPDATE tblEmployee SET EmployeeNumber = 9123 Where EmployeeNumber = 123
+  DELETE tblEmployee Where EmployeeNumber = 123
+
+  SELECT E.EmployeeNumber, T.*
+  --The T.* selects all columns in table T.  A nice shortcut to select
+  --all the columns where a join is occurring.
+  FROM tblEmployee as E
+  RIGHT JOIN tblTransaction as T
+  on E.EmployeeNumber = T.EmployeeNumber
+  where T.Amount IN (-179.47, 786.22, -967.36, 957.03)
+
+ROLLBACK TRAN
+--Allows for a rollback if needed
