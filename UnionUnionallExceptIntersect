@@ -1,0 +1,56 @@
+Union
+
+1
+2
+3
+union
+1
+2
+4
+
+--End result is 1, 2, 3, 4.  Union includes all rows from both tables, excluding any duplicates.
+
+
+
+
+Union all
+
+1
+2
+3
+Union all
+1
+2
+4
+
+--End result is 1, 2, 3, 1, 2, 4.  Union all includes all rows from both tables.
+
+
+
+
+except
+
+1
+2
+3
+except
+1
+2
+4
+
+--End result is 3.  Except makes copy of first table and deletes any values included in 2nd table
+
+
+
+
+intersect
+
+1
+2
+3
+intersect
+1
+2
+4
+
+--End result is 1, 2.  Intersect makes copy of first table and keeps any values included in 2nd table
