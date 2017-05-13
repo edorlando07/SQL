@@ -19,4 +19,6 @@ begin tran
 	
 rollback tran
 
+select * from tempdb.dbo.MRDWtest
+
 
