@@ -1,0 +1,20 @@
+--Use the commit tran ONLY after you have used the 
+--rollback option.  Once you feel good about the 
+--query using rollback, you can change it to 
+--commit to get it into the database.
+
+USE tempdb
+GO
+
+SELECT * FROM dbo.MRDWtest
+
+BEGIN TRAN
+
+	ALTER TABLE dbo.MRDWtest 
+		ADD 
+		DateOfStay date NULL, 
+		BookingDate date NULL;
+
+		SELECT * FROM dbo.MRDWtest
+
+ROLLBACK TRAN
