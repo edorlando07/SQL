@@ -7,7 +7,16 @@ USE tempdb
 GO
 
 begin tran
-	insert into tempdb.dbo.tblTransaction
-	values (100, '2017-04-28', 1)
-	select * from tempdb.dbo.tblTransaction
+	insert into tempdb.dbo.MRDWtest
+	(Rev, RNs, Hotel)
+	
+	values 
+	(100, 1, 'SHS Chicago'),
+	(200, 2, 'SHS Chicago'),
+	(300, 3, 'SHS Chicago')
+	
+	select * from tempdb.dbo.MRDWtest
+	
 rollback tran
+
+
