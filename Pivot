@@ -1,0 +1,14 @@
+--Original Table
+SELECT * FROM dbo.PivotTest
+
+
+--Unpivot
+select u.PropIDTest, u.RevinateRestNumber, u.RevinateRestName
+	from dbo.PivotTest original
+	unpivot
+	(
+		--new column
+		RevinateRestName
+		--pivoting the Revinate Rest Number
+		for RevinateRestNumber in (RevRestNameTest01, RevRestNameTest02, RevRestNameTest03)
+	) u;
