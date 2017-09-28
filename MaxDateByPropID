@@ -1,0 +1,18 @@
+--This code provides the distinct MAX DATE for each hotel.
+--This code was used to provide a view for the PDSA
+
+SELECT DISTINCT(B.[Prop_Id]),[Max_Date]
+
+       FROM [PROD_EDW_V].[dbo].[ONE_YIELD_OTB_v] AS A
+       inner join 
+       
+       (SELECT [Prop_Id],MAX([rptDate]) as [Max_Date]
+       FROM [PROD_EDW_V].[dbo].[ONE_YIELD_OTB_v]
+
+       GROUP BY [Prop_Id])B
+       on B.Prop_Id = B.[Prop_Id] and B.[Max_Date] = [rptDate]
+
+       --Filters out any hotel data that is at least 48 hours old (need to verify with MK) 
+       WHERE GETDATE()-[rptDate] <= 2
+       
+       ORDER BY B.Prop_Id
