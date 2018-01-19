@@ -1,0 +1,75 @@
+USE [PROD_VIEWS]
+GO
+
+CREATE VIEW [dbo].[BI_ForecastFlag] AS
+
+  SELECT 
+             [TM1Year],
+			 [TM1Period],
+			 [ForecastFlag],
+			 [TM1Date],
+                           --Latest Month Closed
+                           CASE WHEN
+                           (
+							SELECT MAX([TM1Date])
+							FROM [PROD_EDW_V].[dbo].[ForecastFlag]
+							WHERE [ForecastFlag] = 1
+                           )= [TM1Date] THEN 1 ELSE 0 END
+                            AS [LatestMoClosedFlag],
+                        
+                           --Current Month Not Actualized
+                           CASE WHEN
+                           (
+							SELECT DATEADD(month,1,MAX([TM1Date]))
+							FROM [PROD_EDW_V].[dbo].[ForecastFlag]
+							WHERE [ForecastFlag] = 1
+                           )= [TM1Date] THEN 1 ELSE 0 END
+                            AS [CurrentMoFlag],
+
+                           --YTD Calc
+                           CASE WHEN
+                           (
+							SELECT YEAR(DATEADD(month,1,MAX([TM1Date])))
+							FROM [PROD_EDW_V].[dbo].[ForecastFlag]
+							WHERE [ForecastFlag] = 1
+                           )=YEAR([TM1Date]) 
+
+                           AND
+
+                           (
+							SELECT DATEADD(month,1,MAX([TM1Date]))
+							FROM [PROD_EDW_V].[dbo].[ForecastFlag]
+							WHERE [ForecastFlag] = 1
+                           )>([TM1Date]) 
+                            THEN 1 ELSE 0 END
+                            AS [YTDFlag],
+
+                           --ROY Calc
+                           CASE WHEN
+                           (
+							SELECT YEAR(DATEADD(month,1,MAX([TM1Date])))
+							FROM [PROD_EDW_V].[dbo].[ForecastFlag]
+							WHERE [ForecastFlag] = 1
+                           )=YEAR([TM1Date]) 
+
+                           AND
+
+                           (
+							SELECT DATEADD(month,1,MAX([TM1Date]))
+							FROM [PROD_EDW_V].[dbo].[ForecastFlag]
+							WHERE [ForecastFlag] = 1
+                           )<=([TM1Date]) 
+                            THEN 1 ELSE 0 END
+                            AS [ROYFlag],
+
+                           --Full Year Calc
+                           CASE WHEN
+                           (
+							SELECT YEAR(DATEADD(month,1,MAX([TM1Date])))
+							FROM [PROD_EDW_V].[dbo].[ForecastFlag]
+							WHERE [ForecastFlag] = 1
+                           )=YEAR([TM1Date])
+                            THEN 1 ELSE 0 END
+                            AS [FullYearFlag]
+
+  FROM [PROD_EDW_V].[dbo].[ForecastFlag]
