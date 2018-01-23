@@ -1,0 +1,74 @@
+--Jan YTD Stats
+SELECT
+		--BI Property Master Reporting
+		BIPM.[Active_Prop_Id]
+		,BIPM.[Prop_Name]
+		,BIPM.[Brand_Name]
+		,BIPM.[City_Name]
+		,BIPM.[State_Cd]
+		,BIPM.[AM_Comparable_Ind]
+		,BIPM.[Managed_Ind]
+		,BIPM.[Region_Id]
+		,BIPM.[Owner_Desc]
+		,BIPM.[Division_Cd]
+		,BIPM.[GM_Name]
+		,BIPM.[Flow_Scale_Cd]
+		,BIPM.[RVP_Name]
+
+
+		--Financial Month Reporting
+		,DATEFROMPARTS(YEAR([First_of_Month_Dt]), MAX(MONTH([First_of_Month_Dt])),1) AS First_of_Month_Dt
+		,SUM([Bud_GRA_Buyout_Wages_Cnt]) AS Bud_GRA_Buyout_Wages_Cnt
+		,SUM([Bud_GRA_Wages_Cnt]) AS Bud_GRA_Wages_Cnt
+    ,SUM([Bud_Rm_Revn_No_Comp_Cnt]) +SUM([Bud_Rm_Revn_Comp_Cnt]) AS Bud_Rm_Revn_With_Comp_Cnt
+		,SUM([Bud_Total_Dept_Food_Bvg_Sales]) AS Bud_Total_Dept_Food_Bvg_Sales
+    --F&B POR Calc Beg
+    ,COALESCE(SUM([Bud_Total_Dept_Food_Bvg_Sales]) / NULLIF((SUM([Bud_Rm_Revn_No_Comp_Cnt]) + SUM([Bud_Rm_Revn_Comp_Cnt])),0)  ,0) AS Bud_Total_Dept_Food_Bvg_Sales_POR 
+    ,SUM([Fcst_GRA_Buyout_Wages_Cnt]) AS Fcst_GRA_Buyout_Wages_Cnt
+		,SUM([Fcst_GRA_Wages_Cnt]) AS Fcst_GRA_Wages_Cnt
+    ,SUM([Fcst_Rm_Revn_No_Comp_Cnt]) +SUM([Fcst_Rm_Revn_Comp_Cnt]) AS Fcst_Rm_Revn_With_Comp_Cnt
+		,SUM([Fcst_Total_Dept_Food_Bvg_Sales]) AS Fcst_Total_Dept_Food_Bvg_Sales
+    --F&B POR Calc Beg
+    ,COALESCE(SUM([Fcst_Total_Dept_Food_Bvg_Sales]) / NULLIF((SUM([Fcst_Rm_Revn_No_Comp_Cnt]) + SUM([Fcst_Rm_Revn_Comp_Cnt])),0)  ,0) AS Fcst_Total_Dept_Food_Bvg_Sales_POR
+    ,SUM([PY_GRA_Buyout_Wages_Cnt]) AS PY_GRA_Buyout_Wages_Cnt
+    ,SUM([PY_GRA_Wages_Cnt]) AS PY_GRA_Wages_Cnt
+    ,SUM([PY_Rm_Revn_No_Comp_Cnt]) +SUM([PY_Rm_Revn_Comp_Cnt]) AS PY_Rm_Revn_With_Comp_Cnt
+		,SUM([PY_Total_Dept_Food_Bvg_Sales]) AS PY_Total_Dept_Food_Bvg_Sales
+    --F&B POR Calc Beg
+    ,COALESCE(SUM([PY_Total_Dept_Food_Bvg_Sales]) / NULLIF((SUM([PY_Rm_Revn_No_Comp_Cnt]) + SUM([PY_Rm_Revn_Comp_Cnt])),0)  ,0) AS PY_Total_Dept_Food_Bvg_Sales_POR
+
+
+		--Forecast Flag
+		,SUM(CAST(FF.ForecastFlag AS INT)) AS ActualizedMonths
+		 
+ 
+FROM	[PROD_VIEWS].[dbo].[BI_PropertyMasterReporting] BIPM
+			LEFT OUTER JOIN [PROD_EDW_V].[dbo].[FinancialMonthlyReporting_v] FMR
+			ON BIPM.[Active_Prop_Id] = FMR.[Prop_ID]
+
+			LEFT OUTER JOIN [PROD_VIEWS].[dbo].[BI_ForecastFlag] FF
+			ON FMR.First_of_Month_Dt = FF.TM1Date
+
+--Month Parameter
+WHERE	MONTH(FMR.First_of_Month_Dt) <= 1
+
+
+GROUP BY 
+		BIPM.[Active_Prop_Id]
+    ,BIPM.[Prop_Name]
+		,BIPM.[Brand_Name]
+		,BIPM.[City_Name]
+		,BIPM.[State_Cd]
+		,BIPM.[AM_Comparable_Ind]
+		,BIPM.[Managed_Ind]
+		,BIPM.[Region_Id]
+		,BIPM.[Owner_Desc]
+		,BIPM.[Division_Cd]
+		,BIPM.[GM_Name]
+		,BIPM.[Flow_Scale_Cd]
+		,BIPM.[RVP_Name]
+		,FMR.[Prop_ID]
+    ,YEAR([First_of_Month_Dt])
+
+--To add months, simply add a UNION ALL and change month parameter for each UNION.
+
