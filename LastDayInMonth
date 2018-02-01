@@ -1,0 +1,39 @@
+CREATE VIEW [dbo].[BI_GuestRankswithPropertyMasterReporting] as (
+SELECT 
+       B.Rank_Order_Num,
+       A.[Year],
+       A.Eff_Dt,
+     
+	     --Produces Latest Wednesday of current month as well as the last Wednesday of prior months
+	     CASE 
+            WHEN DATEPART(YEAR, A.Eff_Dt) = DATEPART(YEAR, GETDATE()) AND Rank_Order_Num = 1
+            THEN A.Eff_Dt
+            ELSE DATEADD(day, -((DATEPART(dw,EOMONTH(A.Eff_Dt))+3))%7, EOMONTH(A.Eff_Dt))
+       END AS Max_Wed_in_Mo_Date,
+
+       A.Conversion_Ind,
+       A.TM1_Question_Element,
+       A.Rank_Question,
+       A.GSS_Rank,
+       A.GSS_Prop_Count,
+       C.Conversion_Type,
+       C.Red,
+       C.Orange,
+       C.Yellow,
+       C.Green,
+       C.Gold,
+       C.Platinum,
+       D.*
+       
+  FROM [PROD_EDW].[dbo].[GuestRanks] A
+    LEFT JOIN PROD_EDW.dbo.GuestRankOrderNumberLKP B
+    ON A.[Year]=B.[Year]
+    AND A.Eff_dt=B.Eff_dt
+    AND A.Prop_Id = B.Prop_Id
+  
+    LEFT JOIN PROD_EDW.dbo.GuestBSCNaturalColorThresholds C
+    AND A.Conversion_Ind=C.Conversion_ind
+  
+    LEFT JOIN PROD_VIEWS.dbo.BI_PropertyMasterReporting D
+    ON A.Prop_Id=D.Prop_Id
+    )
