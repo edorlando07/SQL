@@ -1,0 +1,185 @@
+SELECT
+	     [EMPLOYEE_ID]
+      ,[PERIOD_START]
+      ,[PERIOD_END]
+      ,[HIST_PROCESS_LEVEL]
+      ,[HIST_DEPARTMENT]
+      ,[HIST_JOB_CODE]
+      ,[HIST_MANAGER_STATUS]
+      ,[HIST_POSITION]
+      ,[HIST_TERM_DATE]
+      ,[TERM_CODE]
+      ,[TERM_REASON]
+
+	    ,[HIST_ACTIVE_TEST]
+	    ,NULL AS LY_HIST_ACTIVE_TEST
+
+      ,[TERM_TEST]
+	    ,NULL AS LY_TERM_TEST
+
+	    ,[ACTIVE_TEST]
+	    ,NULL AS LY_ACTIVE_TEST
+
+	    ,[HIRE_TEST]
+	    ,NULL AS LY_HIRE_TEST
+
+      ,[FIRST_NAME]
+      ,[LAST_NAME]
+      ,[FULL_NAME]
+      ,[SUPERVISOR]
+      ,[PAY_GRADE]
+      ,[SALARY_CLASS]
+      ,[JOB_CODE]
+      ,[MANAGER_STATUS]
+      ,[EMP_STATUS]
+      ,[COMPANY]
+      ,[DEPARTMENT]
+      ,[HIRE_DATE]
+
+      ,[TERMINATE_DATE]
+	    ,NULL AS LY_TERMINATE_DATE
+
+      ,[HIST_DESCRIPTION]
+      ,[HIST_HOTEL_CITY]
+      ,[HIST_HOTEL_STATE]
+      ,[HIST_DIVISION]
+      ,[HIRING_MANAGER]
+      ,[HOTEL_CITY]
+      ,[HOTEL_STATE]
+      ,[DIVISION]
+      ,[DESC_DATE]
+      ,[POSITION_DESC]
+      ,[EMP_STATUS_DESC]
+      ,[HIST_PROP_NAME]
+      ,[BIRTH_DATE]
+      ,[ETHNICITY]
+      ,[GENDER]
+      ,[HIST_HIRE_DATE]
+	    --Property Master Reporting Columns = C
+	    ,C.[Prop_Id]
+      ,C.[Active_Prop_Id]
+      ,C.[Revinate_Hotel_Desc]
+      ,C.[Market_Share_Comparable_Ind]
+      ,C.[Open_Dt]
+      ,C.[Prop_Name]
+      ,C.[Parent_Brand_Cd]
+      ,C.[Brand_Name]
+      ,C.[METS_Region]
+      ,C.[Hotel_Cd]
+      ,C.[City_Name]
+      ,C.[Sales_Cluster_Cd]
+      ,C.[State_Cd]
+      ,C.[Zip_Cd]
+      ,C.[AM_Comparable_Ind]
+      ,C.[HR_Prop_Id]
+      ,C.[Process_Level]
+      ,C.[Rm_Cnt]
+      ,C.[Managed_Ind]
+      ,C.[Region_Id]
+      ,C.[Owner_Desc]
+      ,C.[Division_Cd]
+      ,C.[Asset_Type_Cd]
+      ,C.[GM_Name]
+      ,C.[Flow_Scale_Cd]
+      ,C.[Grp_Performance_Type_Id]
+      ,C.[RVP_Name]
+  
+FROM [PROD_EDW_V].[dbo].[TurnoverAndPositionHistoryV2] A
+  LEFT JOIN PROD_VIEWS.dbo.BI_PropertyMasterReporting C
+  ON A.HIST_PROCESS_LEVEL = C.PROCESS_LEVEL
+
+UNION ALL
+--Last Year Column.  NULL LY Measures in table able and NULL CY Measures in table below.
+
+SELECT
+	     [EMPLOYEE_ID]
+      ,B.Calendar_Dt AS PERIOD_START
+      ,B.Calendar_Dt AS PERIOD_END
+      ,[HIST_PROCESS_LEVEL]
+      ,[HIST_DEPARTMENT]
+      ,[HIST_JOB_CODE]
+      ,[HIST_MANAGER_STATUS]
+      ,[HIST_POSITION]
+      ,[HIST_TERM_DATE]
+      ,[TERM_CODE]
+      ,[TERM_REASON]
+	  
+	    ,NULL AS HIST_ACTIVE_TEST
+	    ,[HIST_ACTIVE_TEST] AS LY_HIST_ACTIVE_TEST
+
+	    ,NULL AS TERM_TEST
+      ,[TERM_TEST] AS LY_TERM_TEST
+
+	    ,NULL AS ACTIVE_TEST
+	    ,[ACTIVE_TEST] AS LY_ACTIVE_TEST
+
+	    ,NULL AS HIRE_TEST
+      ,[HIRE_TEST] AS LY_HIRE_TEST
+
+      ,[FIRST_NAME]
+      ,[LAST_NAME]
+      ,[FULL_NAME]
+      ,[SUPERVISOR]
+      ,[PAY_GRADE]
+      ,[SALARY_CLASS]
+      ,[JOB_CODE]
+      ,[MANAGER_STATUS]
+      ,[EMP_STATUS]
+      ,[COMPANY]
+      ,[DEPARTMENT]
+      ,[HIRE_DATE]
+
+	    ,NULL AS TERMINATE_DATE
+      ,[TERMINATE_DATE] AS LY_TERMINATE_DATE
+
+      ,[HIST_DESCRIPTION]
+      ,[HIST_HOTEL_CITY]
+      ,[HIST_HOTEL_STATE]
+      ,[HIST_DIVISION]
+      ,[HIRING_MANAGER]
+      ,[HOTEL_CITY]
+      ,[HOTEL_STATE]
+      ,[DIVISION]
+      ,[DESC_DATE]
+      ,[POSITION_DESC]
+      ,[EMP_STATUS_DESC]
+      ,[HIST_PROP_NAME]
+      ,[BIRTH_DATE]
+      ,[ETHNICITY]
+      ,[GENDER]
+      ,[HIST_HIRE_DATE]
+	    --Property Master Reporting Columns = D
+	    ,D.[Prop_Id]
+      ,D.[Active_Prop_Id]
+      ,D.[Revinate_Hotel_Desc]
+      ,D.[Market_Share_Comparable_Ind]
+      ,D.[Open_Dt]
+      ,D.[Prop_Name]
+      ,D.[Parent_Brand_Cd]
+      ,D.[Brand_Name]
+      ,D.[METS_Region]
+      ,D.[Hotel_Cd]
+      ,D.[City_Name]
+      ,D.[Sales_Cluster_Cd]
+      ,D.[State_Cd]
+      ,D.[Zip_Cd]
+      ,D.[AM_Comparable_Ind]
+      ,D.[HR_Prop_Id]
+      ,D.[Process_Level]
+      ,D.[Rm_Cnt]
+      ,D.[Managed_Ind]
+      ,D.[Region_Id]
+      ,D.[Owner_Desc]
+      ,D.[Division_Cd]
+      ,D.[Asset_Type_Cd]
+      ,D.[GM_Name]
+      ,D.[Flow_Scale_Cd]
+      ,D.[Grp_Performance_Type_Id]
+      ,D.[RVP_Name]
+  
+FROM [PROD_EDW_V].[dbo].[TurnoverAndPositionHistoryV2] A
+  LEFT JOIN [PROD_EDW_V].[dbo].[Calendar_SUM] B
+  ON A.PERIOD_START = B.Last_Year_Dt
+
+  LEFT JOIN PROD_VIEWS.dbo.BI_PropertyMasterReporting D
+  ON A.HIST_PROCESS_LEVEL = D.PROCESS_LEVEL
