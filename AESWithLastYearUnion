@@ -1,0 +1,137 @@
+SELECT [Survey_Type_Id]
+      ,cast(cast([Year] as varchar(10)) as date) as First_of_Month_Dt
+      ,[Var_Flag]
+      ,[Dept]
+      ,[Employee]
+      ,[Full_Name]
+      ,[Last_Name]
+      ,[First_Name]
+      ,[Total Hotel Flag]
+      ,[Type]
+      ,[GM]
+      ,[Manager]
+      ,A.[Process_Level] as AES_Process_Level
+      ,[Job_Description]
+      ,[Question #]
+
+      ,[Nsize]
+         ,Null as LY_Nsize
+    
+      ,[Measures]
+         ,Null as LY_Measures
+
+      ,[Red]
+      ,[Orange]
+      ,[Yellow]
+      ,[Green]
+      ,[Gold]
+      ,[Platinum]
+      ,[Description]
+      ,[Question_Buckets]
+      ,[25Th]
+      ,[50Th]
+      ,[75Th]
+      ,[90Th]
+         ,D.[Active_Prop_Id]
+         ,D.[Revinate_Hotel_Desc]
+         ,D.[Market_Share_Comparable_Ind]
+         ,D.[Open_Dt]
+         ,D.[Prop_Name]
+         ,D.[Parent_Brand_Cd]
+         ,D.[Brand_Name]
+         ,D.[METS_Region]
+         ,D.[Hotel_Cd]
+         ,D.[City_Name]
+         ,D.[Sales_Cluster_Cd]
+         ,D.[State_Cd]
+         ,D.[Zip_Cd]
+         ,D.[AM_Comparable_Ind]
+         ,D.[HR_Prop_Id]
+      ,D.[Process_Level]
+         ,D.[Rm_Cnt]
+         ,D.[Managed_Ind]
+         ,D.[Region_Id]
+         ,D.[Owner_Desc]
+         ,D.[Division_Cd]
+         ,D.[Asset_Type_Cd]
+         ,D.[GM_Name]
+         ,D.[Flow_Scale_Cd]
+         ,D.[Grp_Performance_Type_Id]
+         ,D.[RVP_Name]
+         ,D.[Prop_Id]
+  FROM [PROD_VIEWS].[dbo].[BI_AES_Ind_Manager_Scores] A
+  LEFT JOIN PROD_VIEWS.dbo.BI_PropertyMasterReporting D
+  ON A.Process_Level = D.Process_Level
+  WHERE D.Process_Level <> 'A75'
+
+  Union All
+
+  SELECT [Survey_Type_Id]
+      ,B.Calendar_Dt as First_of_Month_Dt
+      ,[Var_Flag]
+      ,[Dept]
+      ,[Employee]
+      ,[Full_Name]
+      ,[Last_Name]
+      ,[First_Name]
+      ,[Total Hotel Flag]
+      ,[Type]
+      ,[GM]
+      ,[Manager]
+      ,A.[Process_Level] as AES_Process_Level
+      ,[Job_Description]
+         ,[Question #]
+
+      ,Null as [Nsize]
+         ,[Nsize] as LY_Nsize
+    
+      ,Null as [Measures]
+         ,[Measures] as LY_Measures
+
+      ,[Red]
+      ,[Orange]
+      ,[Yellow]
+      ,[Green]
+      ,[Gold]
+      ,[Platinum]
+      ,[Description]
+      ,[Question_Buckets]
+      ,[25Th]
+      ,[50Th]
+      ,[75Th]
+      ,[90Th]
+         ,C.[Active_Prop_Id]
+         ,C.[Revinate_Hotel_Desc]
+         ,C.[Market_Share_Comparable_Ind]
+         ,C.[Open_Dt]
+         ,C.[Prop_Name]
+         ,C.[Parent_Brand_Cd]
+         ,C.[Brand_Name]
+         ,C.[METS_Region]
+         ,C.[Hotel_Cd]
+         ,C.[City_Name]
+         ,C.[Sales_Cluster_Cd]
+         ,C.[State_Cd]
+         ,C.[Zip_Cd]
+         ,C.[AM_Comparable_Ind]
+         ,C.[HR_Prop_Id]
+         ,C.[Process_Level]
+         ,C.[Rm_Cnt]
+         ,C.[Managed_Ind]
+         ,C.[Region_Id]
+         ,C.[Owner_Desc]
+         ,C.[Division_Cd]
+         ,C.[Asset_Type_Cd]
+         ,C.[GM_Name]
+         ,C.[Flow_Scale_Cd]
+         ,C.[Grp_Performance_Type_Id]
+         ,C.[RVP_Name]
+         ,C.[Prop_Id]
+
+  FROM [PROD_VIEWS].[dbo].[BI_AES_Ind_Manager_Scores] A
+  LEFT JOIN PROD_EDW_V.dbo.Calendar_SUM B
+  ON cast(cast(A.[Year] as varchar(10)) as date) = B.Last_Year_Dt
+
+  LEFT JOIN PROD_VIEWS.dbo.BI_PropertyMasterReporting C
+  ON A.Process_Level = C.Process_Level
+  WHERE C.Process_Level <> 'A75'
