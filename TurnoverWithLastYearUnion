@@ -1,5 +1,5 @@
 SELECT
-	     [EMPLOYEE_ID]
+       [EMPLOYEE_ID]
       ,[PERIOD_START]
       ,[PERIOD_END]
       ,[HIST_PROCESS_LEVEL]
@@ -11,17 +11,17 @@ SELECT
       ,[TERM_CODE]
       ,[TERM_REASON]
 
-	    ,[HIST_ACTIVE_TEST]
-	    ,NULL AS LY_HIST_ACTIVE_TEST
+      ,[HIST_ACTIVE_TEST]
+      ,NULL AS LY_HIST_ACTIVE_TEST
 
       ,[TERM_TEST]
-	    ,NULL AS LY_TERM_TEST
+      ,NULL AS LY_TERM_TEST
 
-	    ,[ACTIVE_TEST]
-	    ,NULL AS LY_ACTIVE_TEST
+      ,[ACTIVE_TEST]
+      ,NULL AS LY_ACTIVE_TEST
 
-	    ,[HIRE_TEST]
-	    ,NULL AS LY_HIRE_TEST
+      ,[HIRE_TEST]
+      ,NULL AS LY_HIRE_TEST
 
       ,[FIRST_NAME]
       ,[LAST_NAME]
@@ -37,7 +37,7 @@ SELECT
       ,[HIRE_DATE]
 
       ,[TERMINATE_DATE]
-	    ,NULL AS LY_TERMINATE_DATE
+      ,NULL AS LY_TERMINATE_DATE
 
       ,[HIST_DESCRIPTION]
       ,[HIST_HOTEL_CITY]
@@ -55,8 +55,9 @@ SELECT
       ,[ETHNICITY]
       ,[GENDER]
       ,[HIST_HIRE_DATE]
-	    --Property Master Reporting Columns = C
-	    ,C.[Prop_Id]
+      
+      --Property Master Reporting Columns = C
+      ,C.[Prop_Id]
       ,C.[Active_Prop_Id]
       ,C.[Revinate_Hotel_Desc]
       ,C.[Market_Share_Comparable_Ind]
@@ -92,7 +93,7 @@ UNION ALL
 --Last Year Column.  NULL LY Measures in table able and NULL CY Measures in table below.
 
 SELECT
-	     [EMPLOYEE_ID]
+       [EMPLOYEE_ID]
       ,B.Calendar_Dt AS PERIOD_START
       ,B.Calendar_Dt AS PERIOD_END
       ,[HIST_PROCESS_LEVEL]
@@ -104,16 +105,16 @@ SELECT
       ,[TERM_CODE]
       ,[TERM_REASON]
 	  
-	    ,NULL AS HIST_ACTIVE_TEST
-	    ,[HIST_ACTIVE_TEST] AS LY_HIST_ACTIVE_TEST
+      ,NULL AS HIST_ACTIVE_TEST
+      ,[HIST_ACTIVE_TEST] AS LY_HIST_ACTIVE_TEST
 
-	    ,NULL AS TERM_TEST
+      ,NULL AS TERM_TEST
       ,[TERM_TEST] AS LY_TERM_TEST
 
-	    ,NULL AS ACTIVE_TEST
-	    ,[ACTIVE_TEST] AS LY_ACTIVE_TEST
+      ,NULL AS ACTIVE_TEST
+      ,[ACTIVE_TEST] AS LY_ACTIVE_TEST
 
-	    ,NULL AS HIRE_TEST
+      ,NULL AS HIRE_TEST
       ,[HIRE_TEST] AS LY_HIRE_TEST
 
       ,[FIRST_NAME]
@@ -129,7 +130,7 @@ SELECT
       ,[DEPARTMENT]
       ,[HIRE_DATE]
 
-	    ,NULL AS TERMINATE_DATE
+      ,NULL AS TERMINATE_DATE
       ,[TERMINATE_DATE] AS LY_TERMINATE_DATE
 
       ,[HIST_DESCRIPTION]
@@ -148,8 +149,9 @@ SELECT
       ,[ETHNICITY]
       ,[GENDER]
       ,[HIST_HIRE_DATE]
-	    --Property Master Reporting Columns = D
-	    ,D.[Prop_Id]
+	    
+      --Property Master Reporting Columns = D
+      ,D.[Prop_Id]
       ,D.[Active_Prop_Id]
       ,D.[Revinate_Hotel_Desc]
       ,D.[Market_Share_Comparable_Ind]
