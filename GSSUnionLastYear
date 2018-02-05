@@ -1,0 +1,200 @@
+SELECT
+       [Year]
+      ,[Eff_Dt]
+	  ,DATEPART(wk,[Eff_Dt]) AS Wk_Num
+	  ,DENSE_RANK() OVER (ORDER BY [Eff_Dt] DESC) AS Rnk_All_Wk_Num
+      ,[Max_Wed_in_Mo_Date]
+      ,[Conversion_Ind]
+	  ,[Prop_Name]
+	  
+	  --Current Year Scores
+      ,SUM([GSS_Rank])/COUNT(*) as Avg_GSS_Rank
+      ,SUM([GSS_Prop_Count])/COUNT(*) AS Avg_GSS_Count
+	  ,(CAST((SUM([GSS_Rank])/COUNT(*)) AS FLOAT)) / (SUM([GSS_Prop_Count])/COUNT(*)) AS Avg_GSS_Percentile
+	  
+	  --Last Year Scores
+	  ,NULL as LY_Avg_GSS_Rank
+      ,NULL AS LY_Avg_GSS_Count
+	  ,NULL AS LY_Avg_GSS_Percentile
+	  
+      ,[Conversion_Type]
+      ,[Red]
+      ,[Orange]
+      ,[Yellow]
+      ,[Green]
+      ,[Gold]
+      ,[Platinum]
+      ,[Prop_Id]
+      ,[Active_Prop_Id]
+      ,[Revinate_Hotel_Desc]
+      ,[Market_Share_Comparable_Ind]
+      ,[Open_Dt]
+      ,[Parent_Brand_Cd]
+      ,[Brand_Name]
+      ,[METS_Region]
+      ,[Hotel_Cd]
+      ,[City_Name]
+      ,[Sales_Cluster_Cd]
+      ,[State_Cd]
+      ,[Zip_Cd]
+      ,[AM_Comparable_Ind]
+      ,[HR_Prop_Id]
+      ,[Process_Level]
+      ,[Rm_Cnt]
+      ,[Managed_Ind]
+      ,[Region_Id]
+      ,[Owner_Desc]
+      ,[Division_Cd]
+      ,[Asset_Type_Cd]
+      ,[GM_Name]
+      ,[Flow_Scale_Cd]
+      ,[Grp_Performance_Type_Id]
+      ,[RVP_Name]
+  FROM [PROD_VIEWS].[dbo].[BI_GuestRankswithPropertyMasterReporting] A
+
+  WHERE 
+		TM1_Question_Element = 'Bonus_Score_1' OR TM1_Question_Element = 'Bonus_Score_2'
+
+  GROUP BY
+		[Year]
+		,[Eff_Dt]
+	    ,DATEPART(wk,[Eff_Dt])
+		,[Max_Wed_in_Mo_Date]
+		,[Conversion_Ind]
+		,[Prop_Name]
+		,[Conversion_Type]
+        ,[Red]
+		,[Orange]
+		,[Yellow]
+		,[Green]
+        ,[Gold]
+        ,[Platinum]
+        ,[Prop_Id]
+        ,[Active_Prop_Id]
+        ,[Revinate_Hotel_Desc]
+        ,[Market_Share_Comparable_Ind]
+        ,[Open_Dt]
+        ,[Parent_Brand_Cd]
+        ,[Brand_Name]
+        ,[METS_Region]
+        ,[Hotel_Cd]
+        ,[City_Name]
+        ,[Sales_Cluster_Cd]
+        ,[State_Cd]
+        ,[Zip_Cd]
+        ,[AM_Comparable_Ind]
+        ,[HR_Prop_Id]
+        ,[Process_Level]
+        ,[Rm_Cnt]
+        ,[Managed_Ind]
+        ,[Region_Id]
+        ,[Owner_Desc]
+        ,[Division_Cd]
+        ,[Asset_Type_Cd]
+        ,[GM_Name]
+        ,[Flow_Scale_Cd]
+        ,[Grp_Performance_Type_Id]
+        ,[RVP_Name]
+
+UNION ALL
+
+SELECT
+       DATEPART(year,B.[Calendar_Dt]) AS [Year]
+      ,B.[Calendar_Dt]
+	  ,DATEPART(wk,B.[Calendar_Dt]) AS Wk_Num
+	  ,DENSE_RANK() OVER (ORDER BY A.[Eff_Dt] DESC) AS Rnk_All_Wk_Num
+      ,[Max_Wed_in_Mo_Date]
+      ,[Conversion_Ind]
+	  ,[Prop_Name]
+	  
+	  --Current Year Scores
+	  ,NULL as Avg_GSS_Rank
+      ,NULL AS Avg_GSS_Count
+	  ,NULL AS Avg_GSS_Percentile
+
+	  --Current Year Scores
+      ,SUM([GSS_Rank])/COUNT(*) as LY_Avg_GSS_Rank
+      ,SUM([GSS_Prop_Count])/COUNT(*) AS LY_Avg_GSS_Count
+	  ,(CAST((SUM([GSS_Rank])/COUNT(*)) AS FLOAT)) / (SUM([GSS_Prop_Count])/COUNT(*)) AS LY_Avg_GSS_Percentile
+	  
+      ,[Conversion_Type]
+      ,[Red]
+      ,[Orange]
+      ,[Yellow]
+      ,[Green]
+      ,[Gold]
+      ,[Platinum]
+      ,[Prop_Id]
+      ,[Active_Prop_Id]
+      ,[Revinate_Hotel_Desc]
+      ,[Market_Share_Comparable_Ind]
+      ,[Open_Dt]
+      ,[Parent_Brand_Cd]
+      ,[Brand_Name]
+      ,[METS_Region]
+      ,[Hotel_Cd]
+      ,[City_Name]
+      ,[Sales_Cluster_Cd]
+      ,[State_Cd]
+      ,[Zip_Cd]
+      ,[AM_Comparable_Ind]
+      ,[HR_Prop_Id]
+      ,[Process_Level]
+      ,[Rm_Cnt]
+      ,[Managed_Ind]
+      ,[Region_Id]
+      ,[Owner_Desc]
+      ,[Division_Cd]
+      ,[Asset_Type_Cd]
+      ,[GM_Name]
+      ,[Flow_Scale_Cd]
+      ,[Grp_Performance_Type_Id]
+      ,[RVP_Name]
+  FROM [PROD_VIEWS].[dbo].[BI_GuestRankswithPropertyMasterReporting] A
+  LEFT JOIN PROD_EDW_V.dbo.Calendar_SUM B
+  ON A.[Eff_Dt] = B.[STLY_Dt]
+
+  WHERE 
+		TM1_Question_Element = 'Bonus_Score_1' OR TM1_Question_Element = 'Bonus_Score_2'
+
+  GROUP BY
+		 DATEPART(year,B.[Calendar_Dt])
+		,B.[Calendar_Dt]
+		,DATEPART(wk,B.[Calendar_Dt])
+		,[Eff_Dt]
+		,[Max_Wed_in_Mo_Date]
+		,[Conversion_Ind]
+		,[Prop_Name]
+		,[Conversion_Type]
+        ,[Red]
+		,[Orange]
+		,[Yellow]
+		,[Green]
+        ,[Gold]
+        ,[Platinum]
+        ,[Prop_Id]
+        ,[Active_Prop_Id]
+        ,[Revinate_Hotel_Desc]
+        ,[Market_Share_Comparable_Ind]
+        ,[Open_Dt]
+        ,[Parent_Brand_Cd]
+        ,[Brand_Name]
+        ,[METS_Region]
+        ,[Hotel_Cd]
+        ,[City_Name]
+        ,[Sales_Cluster_Cd]
+        ,[State_Cd]
+        ,[Zip_Cd]
+        ,[AM_Comparable_Ind]
+        ,[HR_Prop_Id]
+        ,[Process_Level]
+        ,[Rm_Cnt]
+        ,[Managed_Ind]
+        ,[Region_Id]
+        ,[Owner_Desc]
+        ,[Division_Cd]
+        ,[Asset_Type_Cd]
+        ,[GM_Name]
+        ,[Flow_Scale_Cd]
+        ,[Grp_Performance_Type_Id]
+        ,[RVP_Name]
